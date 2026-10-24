@@ -60,8 +60,22 @@ streamlit run project_app.py
 
 ## Limitations
 
-Some data may be missing for particular regions or energy types. Regional consumption figures are not adjusted for population or economic activity, and the observed changes do not necessarily indicate changes in energy efficiency.
+Some data may be missing for particular regions or energy types. Regional consumption is not adjusted for population or economic activity, and changes in consumption do not necessarily mean changes in energy efficiency.
+
+Also, not all available data was used, such as detailed sector codes and energy operators.
+
+Future improvements could include these variables, as well as population, temperature and economic data, to better explain regional differences.
+
 
 ## Technologies
 
 Python, Pandas, Plotly and Streamlit.
+
+
+## Project Links
+
+## Project Links
+
+- [Streamlit App](https://energy-consumption-france.streamlit.app/)
+- [GitHub Repository](https://github.com/bapt4444/energy-consumption-france)
+- [Demo Video](https://efrei365net-my.sharepoint.com/:v:/g/personal/baptiste_bertrand_20231493_efrei_net/IQBVm9SNhV13QapLYpQ5sytjAYSMa2W2MV2rNch7Fo6ZviA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=z9Z2z1)
