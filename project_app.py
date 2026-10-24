@@ -76,7 +76,7 @@ regions_geo = load_geojson()
 # Sidebar
 # -----------------------------
 with st.sidebar:
-    st.header("Evolution Filters")
+    st.header("Evolution Filters (Overview)")
 
     year_range = st.slider(
         "Year Range",
@@ -256,32 +256,18 @@ with tab1:
 
 
     # Storytelling: electricity and gas
-    energy_by_year = energy_conso.pivot(
-        index="Année",
-        columns="FILIERE",
-        values="Conso totale (TWh)"
+    st.write(
+        "**Key Insight (France, 2011–2024):** Electricity briefly overtook gas "
+        "in 2014, before gas became dominant again. "
+        "Electricity then overtook gas again in 2023 and remained ahead in 2024."
     )
 
-    if "Electricité" in energy_by_year and "Gaz" in energy_by_year:
-        electricity_majority = energy_by_year[
-            energy_by_year["Electricité"] > energy_by_year["Gaz"]
-        ]
+    st.write(
+        "This evolution is mainly linked to a decrease in gas consumption "
+        "rather than a strong increase in electricity consumption."
+    )
 
-        if not electricity_majority.empty:
-            first_year = int(electricity_majority.index.min())
 
-            st.write(
-                f"**Key Insight:** Electricity became the main source of "
-                f"reported energy consumption in {first_year}, overtaking gas. "
-                "This marks a change in the energy mix, which was previously "
-                "dominated by gas."
-            )
-
-            st.write(
-                "This change is mainly explained by a decrease in gas consumption, "
-                "rather than a strong increase in electricity consumption. "
-                "As a result, electricity represents a larger share of the total energy mix."
-            )
     st.subheader("Consumption by Sector Over Time")
 
     # Total consumption by year and sector
@@ -661,8 +647,7 @@ with tab2:
 
         with cols[i]:
             st.write(f"**{name}**")
-            st.plotly_chart(fig, use_container_width=True)
-
+            st.plotly_chart(fig, use_container_width=True, key=f"overseas_map_{code}")
     st.divider()
 
     # -----------------------------
@@ -674,13 +659,15 @@ with tab2:
     # Select a region
     selected_region = st.selectbox(
         "Select a region",
-        options=sorted(df["Nom Région"].unique())
+        options=sorted(year_data["Nom Région"].unique())
     )
 
     # Data for the selected region and year
     region_data = year_data[
         year_data["Nom Région"] == selected_region
     ].copy()
+
+
 
     # Data for the previous year
     previous_region_data = df[
@@ -711,6 +698,7 @@ with tab2:
     region_avg_site = (
         region_data["Conso totale (MWh)"].sum() /
         region_data["Nb sites"].sum()
+        if region_data["Nb sites"].sum() > 0 else None
     )
 
     previous_region_avg_site = (
@@ -801,7 +789,7 @@ with tab2:
 
     col2.metric(
         "Average Consumption per Site",
-        f"{region_avg_site:.2f} MWh",
+        f"{region_avg_site:.2f} MWh" if region_avg_site is not None else "N/A",
         f"{region_avg_change:+.2f}%" if region_avg_change is not None else None,
         delta_color="off"
     )
@@ -838,8 +826,7 @@ with tab2:
     fig.update_traces(textinfo="percent+label")
 
     with col1:
-        st.plotly_chart(fig, use_container_width=True)
-
+        st.plotly_chart(fig, use_container_width=True, key="national_energy_pie")
 
     # Regional energy mix
     fig = px.pie(
@@ -858,7 +845,7 @@ with tab2:
     fig.update_traces(textinfo="percent+label")
 
     with col2:
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, key="regional_energy_pie")
 
     # Warn about missing energy types
     if len(regional_energy) < 2:
