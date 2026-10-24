@@ -71,9 +71,6 @@ Future improvements could include these variables, as well as population, temper
 
 Python, Pandas, Plotly and Streamlit.
 
-
-## Project Links
-
 ## Project Links
 
 - [Streamlit App](https://energy-consumption-france.streamlit.app/)
