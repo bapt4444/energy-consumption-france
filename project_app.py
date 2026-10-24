@@ -153,26 +153,6 @@ with tab1:
                 "for the selected regions."
             )
 
-    # Yearly consumption change
-
-    st.subheader("Number of Sites Over Time")
-
-    # Total number of reported sites by year
-    annual_sites = evolution_df.groupby("Année")[
-        "Nb sites"
-    ].sum().reset_index()
-
-    # Evolution of the number of sites
-    fig = px.line(
-        annual_sites,
-        x="Année",
-        y="Nb sites",
-        markers=True,
-        title="Evolution of the Number of Reported Sites"
-    )
-
-    st.plotly_chart(fig, use_container_width=True)
-
 
     annual_conso["Yearly Change (%)"] = annual_conso["Conso totale (TWh)"].pct_change() * 100
 
@@ -207,6 +187,27 @@ with tab1:
         "These examples show that changes in energy consumption "
         "do not necessarily reflect long-term improvements in energy efficiency."
     )
+
+
+    st.subheader("Number of Sites Over Time")
+
+    # Total number of reported sites by year
+    annual_sites = evolution_df.groupby("Année")[
+        "Nb sites"
+    ].sum().reset_index()
+
+    # Evolution of the number of sites
+    fig = px.line(
+        annual_sites,
+        x="Année",
+        y="Nb sites",
+        markers=True,
+        title="Evolution of the Number of Reported Sites"
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+
 
 
 
